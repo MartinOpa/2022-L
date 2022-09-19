@@ -1,0 +1,74 @@
+// // some argument?
+	// if ( t_numarg > 1 )
+	// {
+	// 	// Load image
+	// 	cv::Mat l_bgra_cv_img = cv::imread( t_arg[ 1 ], cv::IMREAD_UNCHANGED ); // CV_LOAD_IMAGE_UNCHANGED );
+
+	// 	if ( !l_bgra_cv_img.data )
+	// 		printf( "Unable to read file '%s'\n", t_arg[ 1 ] );
+
+	// 	else if ( l_bgra_cv_img.channels() != 4 )
+	// 		printf( "Image does not contain alpha channel!\n" );
+
+	// 	else
+	// 	{
+	// 		// insert loaded image
+	// 		CudaImg l_bgra_cuda_img;
+	// 		l_bgra_cuda_img.m_size.x = l_bgra_cv_img.cols;
+	// 		l_bgra_cuda_img.m_size.y = l_bgra_cv_img.rows;
+	// 		l_bgra_cuda_img.m_p_uchar4 = ( uchar4 * ) l_bgra_cv_img.data;
+
+	// 		cu_insertimage( l_cuda_img, l_bgra_cuda_img, { ( int ) l_cuda_img.m_size.x / 2, ( int ) l_cuda_img.m_size.y / 2 } );
+
+	// 		cv::imshow( "Result II", l_cv_img );
+	// 	}
+	// }
+
+
+	// // Function calling from .cu file
+	// uint2 l_block_size = { BLOCKX, BLOCKY };
+	// cu_run_animation( l_cuda_img, l_block_size );
+
+	// // Show modified image
+	// cv::imshow( "B-G-R Gradient & Color Rotation", l_cv_img );
+
+    
+
+// void cu_run_animation( CudaImg t_cuda_img, uint2 t_block_size )
+// {
+// 	cudaError_t l_cerr;
+
+// 	// Grid creation with computed organization
+// 	dim3 l_grid( ( t_cuda_img.m_size.x + t_block_size.x - 1 ) / t_block_size.x,
+// 			     ( t_cuda_img.m_size.y + t_block_size.y - 1 ) / t_block_size.y );
+// 	kernel_animation<<< l_grid, dim3( t_block_size.x, t_block_size.y ) >>>( t_cuda_img );
+
+// 	if ( ( l_cerr = cudaGetLastError() ) != cudaSuccess )
+// 		printf( "CUDA Error [%d] - '%s'\n", __LINE__, cudaGetErrorString( l_cerr ) );
+
+// 	cudaDeviceSynchronize();
+
+// }
+
+
+	// // Point [l_x,l_y] selection from image
+	// uchar3 l_bgr, l_tmp = t_cuda_img.m_p_uchar3[ l_y * t_cuda_img.m_size.x + l_x ];
+
+	// // color rotation
+    // l_bgr.x = l_tmp.y;
+    // l_bgr.y = l_tmp.z;
+    // l_bgr.z = l_tmp.x;
+
+	// // Store point [l_x,l_y] back to image
+	// t_cuda_img.m_p_uchar3[ l_y * t_cuda_img.m_size.x + l_x ] = l_bgr;
+
+	// Every threads identifies its position in grid and in block and modify image
+// __global__ void kernel_animation( CudaImg t_cuda_img )
+// {
+// 	// X,Y coordinates 
+// 	int l_y = blockDim.y * blockIdx.y + threadIdx.y;
+// 	int l_x = blockDim.x * blockIdx.x + threadIdx.x;
+// 	if ( l_x >= t_cuda_img.m_size.x ) return;
+// 	if ( l_y >= t_cuda_img.m_size.y ) return;
+
+// }
